@@ -90,28 +90,11 @@ $(call inherit-product, vendor/pixys/config/pixys_audio.mk)
 # Inherit Pixys extra packages
 $(call inherit-product, vendor/pixys/config/pixys_packages.mk)
 
-# Do not include art debug targets
-PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
-
-# Strip the local variable table and the local variable type table to reduce
-# the size of the system image. This has no bearing on stack traces, but will
-# leave less information available via JDWP.
-PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
-
-# Enable whole-program R8 Java optimizations for SystemUI and system_server,
-# but also allow explicit overriding for testing and development.
-SYSTEM_OPTIMIZE_JAVA ?= true
-SYSTEMUI_OPTIMIZE_JAVA ?= true
-
 # Disable vendor restrictions
 PRODUCT_RESTRICT_VENDOR_FILES := false
 
 # Dedupe VNDK libraries with identical core variants
 TARGET_VNDK_USE_CORE_VARIANT := true
-
-# Use a generic profile based boot image by default
-PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
-PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := art/build/boot/boot-image-profile.txt
 
 # Bootanimation
 $(call inherit-product, vendor/pixys/bootanimation/bootanimation.mk)
@@ -136,36 +119,6 @@ PRODUCT_PACKAGES_DEBUG += \
 # Root
 PRODUCT_PACKAGES += \
     adb_root
-
-# ART
-# Optimize everything for preopt
-PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := everything
-# Don't preopt prebuilts
-DONT_DEXPREOPT_PREBUILTS := true
-
-# SystemUI
-PRODUCT_DEXPREOPT_SPEED_APPS += \
-    SystemUI \
-
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    dalvik.vm.systemuicompilerfilter=speed
-
-ifeq ($(TARGET_SUPPORTS_64_BIT_APPS), true)
-# Use 64-bit dex2oat for better dexopt time.
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dex2oat64.enabled=true
-endif
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    pm.dexopt.boot=verify \
-    pm.dexopt.first-boot=verify \
-    pm.dexopt.install=speed-profile \
-    pm.dexopt.bg-dexopt=everything
-
-ifneq ($(AB_OTA_PARTITIONS),)
-PRODUCT_PROPERTY_OVERRIDES += \
-    pm.dexopt.ab-ota=quicken
-endif
 
 # Pixel customization
 TARGET_SUPPORTS_GOOGLE_BATTERY ?= false
@@ -195,6 +148,9 @@ $(call inherit-product, vendor/pixys-prebuilts/config.mk)
 
 # Certification
 $(call inherit-product-if-exists, vendor/certification/config.mk)
+
+# Inherit art options
+include vendor/pixys/config/art.mk
 
 # Pixel Framework
 $(call inherit-product, vendor/pixel-framework/config.mk)
