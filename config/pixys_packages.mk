@@ -3,7 +3,6 @@ PRODUCT_PACKAGES += \
     NoCutoutOverlay \
     AvoidAppsInCutoutOverlay \
     SettingsIntelligenceGoogle \
-    RepainterServicePriv \
     GameSpace \
     TouchGestures \
     BtHelper \
