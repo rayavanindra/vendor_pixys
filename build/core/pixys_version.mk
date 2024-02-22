@@ -22,8 +22,7 @@ endif
 ifeq ($(PIXYS_BUILD_TYPE), OFFICIAL)
 
 PRODUCT_PACKAGES += \
-    Updater
-
+   OpenDelta
 endif
 
 TARGET_PRODUCT_SHORT := $(subst pixysos_,,$(PIXYS_BUILD))

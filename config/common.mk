@@ -39,6 +39,10 @@ PRODUCT_COPY_FILES += \
     vendor/pixys/config/permissions/org.lineageos.health.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/org.lineageos.health.xml \
     vendor/pixys/prebuilt/common/etc/adblock/init.adblock.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.adblock.rc
 
+# Power whitelist
+PRODUCT_COPY_FILES += \
+    vendor/pixys/config/permissions/pixys-power-whitelist.xml:system/etc/sysconfig/pixys-power-whitelist.xml
+
 # Backup Services whitelist
 PRODUCT_COPY_FILES += \
     vendor/pixys/config/permissions/backup.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/backup.xml
