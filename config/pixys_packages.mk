@@ -49,6 +49,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     rsync
 
+# Adblock
+PRODUCT_PACKAGES += \
+    hosts.adblock \
+    hosts.adblock_symlink \
+    hosts.real
+
 ifneq ($(TARGET_BUILD_VARIANT),user)
 PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
     system/bin/procmem
