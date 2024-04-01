@@ -185,6 +185,9 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/pixys/overlay/common
 # rro_overlays
 $(call inherit-product, vendor/pixys/config/rro_overlays.mk)
 
+# pixys prebuilts
+$(call inherit-product, vendor/pixys-prebuilts/config.mk)
+
 # Microsoft
 $(call inherit-product-if-exists, vendor/microsoft/packages.mk)
 
