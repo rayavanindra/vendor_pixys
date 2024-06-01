@@ -193,6 +193,9 @@ $(call inherit-product, vendor/pixys/config/rro_overlays.mk)
 # pixys prebuilts
 $(call inherit-product, vendor/pixys-prebuilts/config.mk)
 
+# Certification
+$(call inherit-product-if-exists, vendor/certification/config.mk)
+
 # Microsoft
 $(call inherit-product-if-exists, vendor/microsoft/packages.mk)
 

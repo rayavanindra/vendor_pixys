@@ -10,6 +10,3 @@ include vendor/pixys/config/BoardConfigSoong.mk
 TARGET_FWK_DETECT_PATH ?= hardware/qcom-caf/common
 PRODUCT_SOONG_NAMESPACES += \
     $(TARGET_FWK_DETECT_PATH)/fwk-detect
-
-# Certification
-include vendor/certification/BoardConfig.mk
