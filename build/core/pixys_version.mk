@@ -21,6 +21,9 @@ endif
 
 ifeq ($(PIXYS_BUILD_TYPE), OFFICIAL)
 
+# Sign with our private keys
+$(call inherit-product, vendor/security/pixys/keys.mk)
+
 PRODUCT_PACKAGES += \
    OpenDelta
 endif
