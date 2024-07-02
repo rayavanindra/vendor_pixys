@@ -170,6 +170,9 @@
         <item>privacy/location_indicators_show_system=false</item>
         <item>privacy/location_indicators_small_enabled=true</item>
 
+        <!-- Enable shared connectivity -->
+        <item>wifi/shared_connectivity_enabled=true</item>
+
         <!-- Enable smart actions in the clipboard overlay -->
         <item>systemui/clipboard_overlay_show_actions=true</item>
 
