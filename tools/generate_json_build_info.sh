@@ -25,13 +25,13 @@ findPayloadOffset() {
 }
 
 if [ "$1" ]; then
-    echo "Generating payload.json"
+    echo "Generating .json"
     file_path=$1
     file_dir=$(dirname "$file_path")
     file_name=$(basename "$file_path")
 
     if [ -f $file_path ]; then
-        # only generate for official and beta builds, unless forced with 'export FORCE_JSON=1'
+        # only generate for official and beta builds. unless forced with 'export FORCE_JSON=1'
         if [[ $file_name == *"BETA"* ]] || [[ $file_name == *"OFFICIAL"* ]] || [[ $FORCE_JSON == 1 ]]; then
             if [[ $FORCE_JSON == 1 ]]; then
                 echo -e "${GREEN}Forced generation of json${NC}"
@@ -39,23 +39,30 @@ if [ "$1" ]; then
             offset=$(findPayloadOffset "$file_path")
             [ -f payload_properties.txt ] && rm payload_properties.txt
             unzip "$file_path" payload_properties.txt
-            
             keyPairs=$(cat payload_properties.txt | sed "s/=/\": \"/" | sed 's/^/          \"/' | sed 's/$/\"\,/')
             keyPairs=${keyPairs%?}
-            
+            datetime=$(date +%s)
             {
                 echo "{"
-                echo "  \"payload\": ["
+                echo "  \"response\": ["
                 echo "    {"
-                echo "      \"offset\": ${offset},"
+                echo "      \"datetime\": ${datetime},"
+                echo "      \"filename\": \"${file_name}\","
+                echo "      \"payload\": ["
+                echo "        {"
+                echo "          \"offset\": ${offset},"
                 echo "${keyPairs}"
+                echo "        }"
+                echo "      ]"
                 echo "    }"
                 echo "  ]"
                 echo "}"
-            } > "${file_dir}/payload.json"
-            echo -e "${GREEN}Done generating ${YELLOW}payload.json${NC}"
+            } > $file_path.json
+            device_code=$(echo $file_name | cut -d'-' -f4)
+            mv "${file_path}.json" "${file_dir}/${device_code}.json"
+            echo -e "${GREEN}Done generating ${YELLOW}${device_code}.json${NC}"
         else
-            echo -e "${YELLOW}Skipped generating json for a unofficial build${NC}"
+            echo -e "${YELLOW}Skipped generating json for a official build${NC}"
         fi
     fi
 fi
