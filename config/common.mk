@@ -76,10 +76,6 @@ PRODUCT_COPY_FILES += \
     vendor/pixys/config/permissions/privapp-permissions-pixys-system.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-pixys.xml \
     vendor/pixys/config/permissions/privapp-permissions-pixys-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-pixys-product.xml
 
-# Disable remote keyguard animation
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    persist.wm.enable_remote_keyguard_animation=0
-
 # Log privapp-permissions whitelist
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.control_privapp_permissions=log
@@ -102,23 +98,9 @@ $(call inherit-product, vendor/pixys/bootanimation/bootanimation.mk)
 # Fonts
 $(call inherit-product, vendor/pixys/config/fonts.mk)
 
-# Quick Tap
-ifeq ($(TARGET_SUPPORTS_QUICK_TAP),true)
-PRODUCT_COPY_FILES += \
-    vendor/pixys/prebuilt/common/etc/sysconfig/quick_tap.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/quick_tap.xml
-endif
-
-# Enable gestural navigation overlay to match default navigation mode
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.boot.vendor.overlay.theme=com.android.internal.systemui.navbar.gestural
-
 # These packages are excluded from user builds
 PRODUCT_PACKAGES_DEBUG += \
     procmem
-
-# Root
-PRODUCT_PACKAGES += \
-    adb_root
 
 # Pixel customization
 TARGET_SUPPORTS_GOOGLE_BATTERY ?= false
